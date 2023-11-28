@@ -6,6 +6,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Paymes\PaymesClient;
 
+/**
+ * Client used to send requests to Paymes' API.
+ *
+ * @property OrdersService $orders
+ */
 class OrdersService extends PaymesClient
 {
     public function create($data)
