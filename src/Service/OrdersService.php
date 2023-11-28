@@ -3,16 +3,20 @@
 namespace Paymes\Service;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
+use Mockery\Exception;
 use Paymes\PaymesClient;
 
-/**
- * Client used to send requests to Paymes' API.
- *
- * @property OrdersService $orders
- */
+
 class OrdersService extends PaymesClient
 {
+    public function __construct(string $publicKey, string $secretKey)
+    {
+        parent::$publicKey = $publicKey;
+        parent::$secretKey = $secretKey;
+    }
+
     public function create($data)
     {
         $secretKey = parent::$secretKey;
@@ -32,11 +36,26 @@ class OrdersService extends PaymesClient
 
         // Base64 encoding from SHAA512 hash
         $base64Encoded = base64_encode($sha512Hash);
-
-        $client = new Client();
-        $response = $client->post('https://api.paym.es/v4.6/order_create',[
-            RequestOptions::QUERY=>$base64Encoded
-        ])->getBody()->getContents();
-        var_dump($response);
+        try {
+            $client = new Client();
+            $response = json_decode($client->post('https://api.paym.es/v4.6/order_create',[
+                RequestOptions::FORM_PARAMS=>[
+                    'publicKey' => self::$publicKey,
+                    'hash' => $base64Encoded,
+                    'orderId' => $data['price'],
+                    'price' => $data['price'],
+                    'currency' => $data['currency'],
+                    'productName' => $data['productName'],
+                    'buyerName' => $data['buyerName'],
+                    'buyerPhone' => $data['buyerPhone'],
+                    'buyerEmail' => $data['buyerEmail'],
+                    'buyerAddress' => $data['buyerAddress'],
+                    'create_order_by_kiosk' => false,
+                ]
+            ])->getBody()->getContents());
+            return $response;
+        }catch (ClientException $exception){
+            return json_decode($exception->getResponse()->getBody()->getContents());
+        }
     }
 }
