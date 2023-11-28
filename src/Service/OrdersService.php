@@ -8,27 +8,18 @@ use Paymes\PaymesClient;
 
 class OrdersService extends PaymesClient
 {
-    public function create(
-        string $orderId,
-        string $price,
-        string $currency,
-        string $productName,
-        string $buyerName,
-        string $buyerPhone,
-        string $buyerEmail,
-        string $buyerAddress,
-    )
+    public function create($data)
     {
         $secretKey = parent::$secretKey;
         $inputString =
-            $orderId .
-            $price .
-            $currency .
-            $productName .
-            $buyerName .
-            $buyerPhone .
-            $buyerEmail .
-            $buyerAddress .
+            $data['orderId'] .
+            $data['price'] .
+            $data['currency'] .
+            $data['productName'] .
+            $data['buyerName'] .
+            $data['buyerPhone'] .
+            $data['buyerEmail'] .
+            $data['buyerAddress'] .
             $secretKey;
 
         // Calculating SHA512 hash
@@ -41,5 +32,6 @@ class OrdersService extends PaymesClient
         $response = $client->post('https://api.paym.es/v4.6/order_create',[
             RequestOptions::QUERY=>$base64Encoded
         ])->getBody()->getContents();
+        var_dump($response);
     }
 }
