@@ -1,5 +1,5 @@
 {
-    "name": "miladxandi/paymes",
+    "name": "miladxandi/paymes-sdk",
     "description": "Paymes payment gateway PHP SDK",
     "type": "library",
     "license": "MIT",
@@ -14,5 +14,8 @@
             "email": "miladxandi@outlook.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.8"
+    }
 }
