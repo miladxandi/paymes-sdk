@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Miladxandi\\Paymes\\": "src/"
+            "Paymes\\": "src/"
         }
     },
     "authors": [

@@ -4,7 +4,7 @@ namespace Paymes;
 
 use Paymes\Service\OrdersService;
 
-class PaymesClient extends BaseCLient
+class PaymesClient
 {
     protected static string $secretKey;
     /**
@@ -12,7 +12,7 @@ class PaymesClient extends BaseCLient
      *
      * @property OrdersService $orders
      */
-    public function PaymesClient(string $secretKey)
+    public function PaymesClient(string $secretKey): void
     {
         self::$secretKey = $secretKey;
     }
