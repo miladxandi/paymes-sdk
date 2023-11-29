@@ -50,7 +50,7 @@ class OrdersService extends PaymesClient
                     'buyerPhone' => $data['buyerPhone'],
                     'buyerEmail' => $data['buyerEmail'],
                     'buyerAddress' => $data['buyerAddress'],
-                    'create_order_by_kiosk' => false,
+                    'create_order_by_kiosk' => $data['create_order_by_kiosk']??false,
                 ]
             ])->getBody()->getContents());
             return $response;

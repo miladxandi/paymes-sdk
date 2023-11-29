@@ -11,6 +11,7 @@ $data = [
     'buyerPhone' => "+1123457890",
     'buyerEmail' => "username@example.com",
     'buyerAddress' => "Temcula Road, California, Los Angeles",
+    'create_order_by_kiosk' => false,
 ];
 
 
